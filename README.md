@@ -17,7 +17,7 @@ var HistoryPlaylist = Backbone.Collection.extend({
 });
 var myPlaylist = new HistoryPlaylist();
 
-console.log( myPlaylist.safe );
+console.log( myPlaylist.storage );
 ```
 
 ### Restrictions
