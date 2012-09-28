@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Backbone.Safe by orizens</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Backbone.Safe</h1>
+        <p>A plugin for backbone models to save &amp; load data using localstorage as well</p>
+
+        <p class="view"><a href="https://github.com/orizens/Backbone.Safe">View the Project on GitHub <small>orizens/Backbone.Safe</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/orizens/Backbone.Safe/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/orizens/Backbone.Safe/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/orizens/Backbone.Safe">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Backbone.Safe - local storage plugin</h1>
+
+<p>Backbone.Safe is a plugin for Backbone.js which stores a model's or a collection's json data to the local storage on set operations, regardless server side existance.</p>
+
+<h2>Usage</h2>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">HistoryPlaylist</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">model</span><span class="o">:</span> <span class="nx">someModel</span><span class="p">,</span>
+
+    <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Safe</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'historyPlaylist'</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="p">},</span>
+
+    <span class="nx">queue</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">youtubeJSON</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">youtubeJSON</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">myPlaylist</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HistoryPlaylist</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">myPlaylist</span><span class="p">.</span><span class="nx">safe</span> <span class="p">);</span>
+</pre></div>
+
+<h3>Restrictions</h3>
+
+<ol>
+<li>Currently supports only one level of models/collections.</li>
+<li>For Model, listens to a 'change' events and stores the data.</li>
+<li>For Collection, listens to 'add', 'reset' events and stores data.</li>
+</ol><p>Download: <a href="https://github.com/orizens/Backbone.Safe/zipball/master">Backbone.Safe</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/orizens">orizens</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
