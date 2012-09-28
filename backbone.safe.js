@@ -97,7 +97,7 @@
 		},
 
 		create: function() {
-			this.storage().setItem(uniqueID, this.emptyValue);
+			this.storage().setItem(this.uid, this.emptyValue);
 		},
 
 		store: function(model) {
