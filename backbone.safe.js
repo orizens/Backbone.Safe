@@ -67,7 +67,7 @@
 		};
 
 		// attach relevant object to Safe prototype
-		_.extend( Backbone.Safe.prototype, this.isCollection ? collection : model );
+		_.extend( this, this.isCollection ? collection : model );
 
 		// if the uid doesn't exist, create it
 		this.ensureUID();
