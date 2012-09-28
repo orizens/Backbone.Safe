@@ -133,7 +133,7 @@
 	// factory method
 	Backbone.Safe.create = function( uniqueID, context, options) {
 		if (uniqueID && context) {
-			context.storage = new Backbone.Safe(uniqueID, context, options);
+			context.safe = new Backbone.Safe(uniqueID, context, options);
 		}
 	}
 

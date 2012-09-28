@@ -17,10 +17,11 @@ var HistoryPlaylist = Backbone.Collection.extend({
 });
 var myPlaylist = new HistoryPlaylist();
 
-console.log( myPlaylist.storage );
+console.log( myPlaylist.safe );
 ```
 
-### Restrictions
+### Useful Information
 1. Currently supports only one level of models/collections.
-2. For Model, listens to a 'change' events and stores the data.
-3. For Collection, listens to 'add', 'reset' events and stores data.
+2. For Model: listens to a 'change' events and stores the data.
+3. For Collection: listens to 'add', 'reset' events and stores data.
+4. The 'create' function creates a new instance of Backbone.Safe in the 'safe' property
