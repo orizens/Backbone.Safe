@@ -3,8 +3,9 @@
 body {
   padding:50px;
   font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color:#777;
+  color:#333;
   font-weight:300;
+  background: url(../images/wood.jpg);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -21,7 +22,10 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size:28px;
+  font-size: 28px;
+  text-shadow: 1px -1px 0px black, 0px 1px 0px white;
+  color: #777;
+  opacity: .5;
 }
 
 h2 {
@@ -66,7 +70,6 @@ code, pre {
 pre {
   padding:8px 15px;
   background: #f8f8f8;  
-  border-radius:5px;
   border:1px solid #e5e5e5;
   overflow-x: auto;
 }
@@ -216,6 +219,11 @@ footer {
     right:50px;
     top:52px;
   }
+}
+
+.safe-logo {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 @media print, screen and (max-width: 720px) {
