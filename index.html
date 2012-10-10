@@ -1,43 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Backbone.Safe by orizens</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Backbone.Safe : A plugin for backbone models to save &amp; load data using localstorage as well" />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Backbone.Safe</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Backbone.Safe</h1>
-        <p>A plugin for backbone models to save &amp; load data using localstorage as well</p>
 
-        <div class="safe-logo">
-          <object type="image/svg+xml" data="images/noun_project_3113.svg" 
-                width="128" height="128" border="0"></object>
-        </div>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/orizens/Backbone.Safe">View on GitHub</a>
 
-        <p class="view"><a href="https://github.com/orizens/Backbone.Safe">View the Project on GitHub <small>orizens/Backbone.Safe</small></a></p>
+          <h1 id="project_title">Backbone.Safe</h1>
+          <h2 id="project_tagline">A plugin for backbone models to save &amp; load data using localstorage as well</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/orizens/Backbone.Safe/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/orizens/Backbone.Safe/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-        <ul>
-          <li><a href="https://github.com/orizens/Backbone.Safe/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/orizens/Backbone.Safe/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/orizens/Backbone.Safe">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>Backbone.Safe - local storage plugin</h1>
 
 <p>Backbone.Safe is a plugin for Backbone.js which stores a model's or a collection's json data to the local storage on set operations, regardless server side existance.</p>
 
+<h2>Latest Features</h2>
+
+<p>Backbone.Safe is now in version 2 - this version define 'Safe' as a first level backbone plugin.
+You can define safe as a key in a Backbone's Object props.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">HistoryPlaylist</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">model</span><span class="o">:</span> <span class="nx">someModel</span><span class="p">,</span>
+
+    <span class="nx">safe</span><span class="o">:</span> <span class="s1">'historyPlaylist'</span><span class="p">,</span>
+
+<span class="c1">// or - define it as such (both are equivalent):</span>
+    <span class="nx">safe</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">key</span><span class="o">:</span> <span class="s1">'historyPlaylist'</span><span class="p">,</span>
+        <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+            <span class="nx">reload</span><span class="o">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+
+    <span class="nx">queue</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">youtubeJSON</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">youtubeJSON</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">myPlaylist</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HistoryPlaylist</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">myPlaylist</span><span class="p">.</span><span class="nx">safe</span> <span class="p">);</span>
+</pre></div>
+
 <h2>Usage</h2>
+
+<p>You can still create Backbone.Safe on demand as such:</p>
 
 <div class="highlight"><pre><span class="kd">var</span> <span class="nx">HistoryPlaylist</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
     <span class="nx">model</span><span class="o">:</span> <span class="nx">someModel</span><span class="p">,</span>
@@ -62,17 +89,21 @@
 <li>For Model: listens to a 'change' events and stores the data.</li>
 <li>For Collection: listens to 'add', 'reset' events and stores data.</li>
 <li>The 'create' function creates a new instance of Backbone.Safe in the 'safe' property</li>
-</ol>
+<li>Currently, the 'options' property has only one options - 'reload': true (as a default) - it reloads the data that is stored in the cache after a refresh or on recreation.</li>
+</ol><p>Download: <a href="https://github.com/orizens/Backbone.Safe/zipball/master">Backbone.Safe</a></p>
 
 <p>By <a href="http://orizens.com">Oren Farhi</a></p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/orizens">orizens</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-        <p><small>safe logo by <a href="http://thenounproject.com/hollowell/">William Hollowell</a>, The Noun Project</small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Backbone.Safe maintained by <a href="https://github.com/orizens">orizens</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -83,6 +114,7 @@
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
