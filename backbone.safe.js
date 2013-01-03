@@ -20,6 +20,8 @@
  *		 				}	
  * 
  *	  			})
+ *
+ * 				on Model instance, use this.safe.reload() (if reload: false)
  * 
  * @requires Backbone.js, Underscore.js
  * @param {string} uniqueID - the name of the storage you'de like to use
