@@ -20,8 +20,6 @@
  *		 				}	
  * 
  *	  			})
- *
- * 				on Model instance, use this.safe.reload() (if reload: false)
  * 
  * @requires Backbone.js, Underscore.js
  * @param {string} uniqueID - the name of the storage you'de like to use
@@ -59,7 +57,7 @@
 					// handle key, value safe
 					storageKey = config.safe.key ? config.safe.key : config.safe;
 					
-					Backbone.Safe.create(storageKey, this, config.safe.options || {});
+					Backbone.Safe.create(storageKey, this, config.safe.options || { reload: true });
 				}
 
 				//- run init of the model instance
@@ -76,7 +74,7 @@
 	Backbone.Safe = function(uniqueID, context, options) {
 
 		// parsing options settings
-		this._reload = options && options.reload && _.isTrue(options.reload);
+		this._reload = options && options.reload && options.reload === true;
 
 		this.uid = uniqueID;
 		this.context = context;
