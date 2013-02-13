@@ -94,8 +94,8 @@
 				context.add(this.getData());
 			},
 
-			toJSON: function(model) {
-				return model.collection.toJSON();
+			toJSON: function(collection) {
+				return collection.toJSON();
 			}
 		};
 
