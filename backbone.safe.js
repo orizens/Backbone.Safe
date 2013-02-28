@@ -176,7 +176,7 @@
 
 		// removes the key from teh localstorage
 		destroy: function() {
-			this.storage().removeItem( this.uniqueID );
+			this.storage().removeItem( this.uid );
 		}
 	};
 
