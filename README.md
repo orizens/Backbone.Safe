@@ -3,7 +3,7 @@ Backbone.Safe is a plugin for Backbone.js which stores a model's or a collection
 The concept for Backbone.Safe has been created while the developing the [Echoes Player project](https://github.com/orizens/echoes).
 
 ## Usage
-The latest update to Backbone.Safe allows one to define safe with a non distructive defition using a key as such:
+The latest update to Backbone.Safe allows one to define safe with a non distructive definition using a key as such:
 ```javascript
 var UserProfile = Backbone.Model.extend({
 	safe: {
