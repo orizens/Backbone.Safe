@@ -5,7 +5,7 @@ The concept for Backbone.Safe has been created while the developing the [Echoes 
 
 Using Bower:
 ```
-bower install backbone.api.itunes
+bower install backbone.safe
 ```
 
 ## Usage
