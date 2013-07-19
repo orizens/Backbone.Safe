@@ -1,6 +1,0 @@
-{
-  "name": "backbone.safe",
-  "version": "0.1.0",
-  "main": ["./backbone.safe.js"],
-  "dependencies": { "backbone", "underscore" }
-}

@@ -1,0 +1,12 @@
+{
+  "name": "backbone.safe",
+  "version": "0.3.0",
+  "main": ["./backbone.safe.js"],
+  "dependencies": { 
+  	"backbone": "~1.0.0",
+  	"underscore": "~1.4.4"
+  },
+  "ignore": [
+  	"**.git*"
+  ]
+}
