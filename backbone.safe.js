@@ -94,6 +94,15 @@
 				context.add(this.getData());
 			},
 
+			fetch: function() {
+				var fetchFromSafe = options && options.from;
+				if (fetchFromSafe && fetchFromSafe === "safe") {
+					this.safe.reload();
+				} else {
+					Backbone.Collection.prototype.fetch.apply(this, arguments);
+				}
+			},
+
 			toJSON: function(collection) {
 				return collection.toJSON();
 			}
@@ -107,6 +116,16 @@
 
 			reload: function() {
 				context.set(this.getData());
+			},
+
+			// options = { from: "safe" }
+			fetch: function (options) {
+				var fetchFromSafe = options && options.from;
+				if (fetchFromSafe && fetchFromSafe === "safe") {
+					this.safe.reload();
+				} else {
+					Backbone.Model.prototype.fetch.apply(this, arguments);
+				}
 			},
 
 			toJSON: function(model) {
@@ -130,6 +149,8 @@
 			this.reload();
 		}
 
+		// attach Backbone custom methods
+		_.extend(context, _.pick(this, ['fetch']));
 		// listen to any change event and cache it
 		context.on(this.events, this.store, this);
 	};
