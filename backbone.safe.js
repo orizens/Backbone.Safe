@@ -47,7 +47,7 @@
 	var createExtend = function(extendFn) {
 		
 		return function(config) {
-			var init = config.initialize || function(){};
+			var init = config.initialize || this.prototype.initialize || function(){};
 			config.initialize = function() {
 				var storageKey;
 				
