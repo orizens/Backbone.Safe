@@ -44,33 +44,30 @@
 	}
 
 	// factory for creating extend replacement for Backbone Objects
-	var createExtend = function(extendFn) {
-		
-		return function(config) {
-			config = config || {};
-			var init = config.initialize || this.prototype.initialize || function(){};
-			config.initialize = function() {
-				var storageKey;
+	function extendWithSafe(backboneExtend, config) {
+		config = config || {};
+		var init = config.initialize || this.prototype.initialize || function(){};
+		config.initialize = function() {
+			var storageKey;
+			
+			// create safe if exist as key
+			if (config && config.safe) {
 				
-				// create safe if exist as key
-				if (config && config.safe) {
-					
-					// handle key, value safe
-					storageKey = config.safe.key ? config.safe.key : config.safe;
-					
-					Backbone.Safe.create(storageKey, this, config.safe.options || { reload: true });
-				}
+				// handle key, value safe
+				storageKey = config.safe.key ? config.safe.key : config.safe;
+				
+				Backbone.Safe.create(storageKey, this, config.safe.options || { reload: true });
+			}
 
-				//- run init of the model instance
-				init.apply(this, arguments);
-			};
-			return extendFn.call(this, config);
+			//- run init of the model instance
+			init.apply(this, arguments);
 		};
+		return backboneExtend.call(this, config);
 	};
-
+	
 	// extend Model & Collection constructor to handle safe initialization
-	Backbone.Model.extend = createExtend(Backbone.Model.extend);
-	Backbone.Collection.extend = createExtend(Backbone.Collection.extend);
+	Backbone.Model.extend = _.wrap(Backbone.Model.extend, extendWithSafe)
+	Backbone.Collection.extend = _.wrap(Backbone.Collection.extend, extendWithSafe)
 
 	Backbone.Safe = function(uniqueID, context, options) {
 
@@ -86,7 +83,7 @@
 			
 			// events that Safe is listening in order to
 			// trigger save to local storage
-			events: 'add reset',
+			events: 'add reset change sort',
 
 			// the value to be used when cleaning the safe
 			emptyValue: '[]',
@@ -154,6 +151,8 @@
 		_.extend(context, _.pick(this, ['fetch']));
 		// listen to any change event and cache it
 		context.on(this.events, this.store, this);
+		// adding destroy handler
+		context.on('destroy', this.destroy, this);
 	};
 
 	Backbone.Safe.prototype = {
@@ -172,9 +171,12 @@
 			this.storage().setItem(this.uid, this.emptyValue);
 		},
 
-		store: function(model) {
+		/*
+		 * @bbDataObj {collection/model}
+		 */
+		store: function(bbDataObj) {
 			this.storage()
-				.setItem(this.uid, JSON.stringify( this.toJSON( model )));
+				.setItem(this.uid, JSON.stringify( this.toJSON( bbDataObj )));
 		},
 
 		storage: function() {
@@ -196,7 +198,7 @@
 			this.create();
 		},
 
-		// removes the key from teh localstorage
+		// removes the key from the localstorage
 		destroy: function() {
 			this.storage().removeItem( this.uid );
 		}

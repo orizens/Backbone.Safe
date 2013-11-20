@@ -71,6 +71,69 @@ describe("Backbone Safe", function () {
 					}
 				});
 		});
-	});
 
+		it("should clear the localStorage when 'destroy' is called", function() {
+			
+			// create a spy for a custom 'destroy'
+			spyOn(Backbone.Model.prototype, 'destroy').andCallFake(function(options){
+				this.clear();
+				this.trigger('destroy');
+			});
+
+			model = new SafeModel();
+			model.set(mockData);
+
+			expect( model.get('id') ).toBeDefined();
+			model.destroy();
+			expect( model.id ).toBeUndefined();
+			expect( model.safe.getData() ).toBeNull();
+		});
+
+		it("should return the JSON from the 'toJSON' method", function(){
+
+			model = new SafeModel();
+			model.set(mockData);
+			expect( model.toJSON() ).toEqual( mockData );
+		});
+
+		it("should save to storage when the model changes", function(){
+			var randomId = Math.round(Math.random()*1000) + 10;
+			model = new SafeModel();
+			model.set(mockData);
+			model.set('id', randomId);
+			expect( model.get('id') ).not.toBe( mockData.id );
+			expect( model.get('id') ).toEqual( randomId );
+			expect( model.get('id') ).toEqual( model.safe.getData().id );
+		});
+
+
+		it("should use constructor's 'initialize' method if config doesn't have", function(){
+			var newId = 555;
+			var AnotherSafeModel = Backbone.Model.extend({
+				safe: "another-safe-tester-2",
+				initialize: function() {
+					this.set('id', newId);
+				}
+			});
+			model = new AnotherSafeModel();
+			
+			expect( model.attributes.id ).toBeDefined();
+			expect( model.get('id') ).toEqual( newId );
+		});
+
+		it("should use constructor's 'initialize' when extending another Model", function(){
+			var newId = 555;
+			var AnotherSafeModel = Backbone.Model.extend({
+				safe: "another-safe-tester",
+				initialize: function() {
+					this.set('id', newId);
+				}
+			});
+			var ExtendedModel = AnotherSafeModel.extend({});
+			model = new ExtendedModel();
+			
+			expect( model.attributes.id ).toBeDefined();
+			expect( model.get('id') ).toEqual( newId );
+		});
+	});
 });
