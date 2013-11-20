@@ -44,30 +44,54 @@
 	}
 
 	// factory for creating extend replacement for Backbone Objects
-	function extendWithSafe(backboneExtend, config) {
-		config = config || {};
-		var init = config.initialize || this.prototype.initialize || function(){};
-		config.initialize = function() {
-			var storageKey;
-			
-			// create safe if exist as key
-			if (config && config.safe) {
-				
-				// handle key, value safe
-				storageKey = config.safe.key ? config.safe.key : config.safe;
-				
-				Backbone.Safe.create(storageKey, this, config.safe.options || { reload: true });
-			}
-
-			//- run init of the model instance
-			init.apply(this, arguments);
-		};
-		return backboneExtend.call(this, config);
+	function BackboneExtender(bbObject, plugins) {
+		var thisExtender = this;
+		this.plugins = plugins;
+		bbObject["extend"] = _.wrap(bbObject["extend"], function(sourceExtend, config){
+			config = config || {}
+			// thisExtender.config = config;
+			var _sourceFn = config.initialize || this.prototype.initialize || function(){};
+			config.initialize = function(){
+				var args = [].slice.call(arguments);
+				thisExtender.config = config;
+				thisExtender.applyPlugins(this, args);
+				_sourceFn.apply(this, args);
+			};
+			return sourceExtend.call(this, config);
+		});
 	};
-	
+
+	BackboneExtender.prototype.applyPlugins = function(instance, args) {
+		var config = this.config,
+			plugins = this.plugins,
+			args = args || [];
+		// run the plugins on this
+		_.each(plugins, function(plugFn){
+			plugFn.call(instance, config, args);
+		});
+	};
+
+	BackboneExtender.prototype.addPlug = function(plugFn) {
+		this.plugins.push(plugFn);
+	};
+
+	var SafePlug = function (config, args) {
+		var storageKey;
+			
+		// create safe if exist as key
+		if (config && config.safe) {
+			
+			// handle key, value safe
+			storageKey = config.safe.key ? config.safe.key : config.safe;
+			
+			Backbone.Safe.create(storageKey, this, config.safe.options || { reload: true });
+		}
+	}
 	// extend Model & Collection constructor to handle safe initialization
-	Backbone.Model.extend = _.wrap(Backbone.Model.extend, extendWithSafe)
-	Backbone.Collection.extend = _.wrap(Backbone.Collection.extend, extendWithSafe)
+	// Backbone.Model.extend = _.wrap(Backbone.Model.extend, BackboneExtender)
+	var modelSafePlugin = new BackboneExtender(Backbone.Model, [ SafePlug ]);
+	var collectionSafePlugin = new BackboneExtender(Backbone.Collection, [ SafePlug ]);
+
 
 	Backbone.Safe = function(uniqueID, context, options) {
 
