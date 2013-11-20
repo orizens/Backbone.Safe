@@ -35,11 +35,23 @@
       <section>
         <h1>Backbone.Safe - local storage plugin</h1>
 
-<p>Backbone.Safe is a plugin for Backbone.js which stores a model's or a collection's json data to the local storage on set operations, regardless server side existance.</p>
+<p>Backbone.Safe is a plugin for Backbone.js which stores a model's or a collection's json data to the local storage on set operations, regardless server side existance.
+Run the latest <a href="/test">Unit Tests</a> to inspect the various features.
+</p>
 
 <h2>Latest Features</h2>
 
 <p>Backbone.Safe is now in <strong>version 3</strong></p>
+
+<h3>20/11/2013</h3>
+<p>the localStorage data can be loaded via the 'fetch' method with
+this configuration, i.e:
+fetch({ from: 'safe' });
+
+ is the same as
+
+this.safe.reload();
+</p>
 
 <h3>3/1/2013</h3>
 <p>The 'reload' attribute is active now. 
