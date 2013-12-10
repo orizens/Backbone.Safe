@@ -100,7 +100,7 @@
 
 		this.uid = uniqueID;
 		this.context = context;
-		this.isCollection = !context.set && context.models && context.add;
+		this.isCollection = context.models && context.add;
 
 		// mixins for collection and model
 		var collection = {
@@ -116,7 +116,7 @@
 				context.add(this.getData());
 			},
 
-			fetch: function() {
+			fetch: function(options) {
 				var fetchFromSafe = options && options.from;
 				if (fetchFromSafe && fetchFromSafe === "safe") {
 					this.safe.reload();
@@ -125,8 +125,8 @@
 				}
 			},
 
-			toJSON: function(collection) {
-				return collection.toJSON();
+			toJSON: function(model) {
+				return model.collection.toJSON();
 			}
 		};
 
