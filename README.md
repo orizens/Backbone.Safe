@@ -55,3 +55,5 @@ console.log( myPlaylist.safe );
 2. For Model: listens to a 'change' events and stores the data.
 3. For Collection: listens to 'add', 'reset' events and stores data.
 4. The 'create' function creates a new instance of Backbone.Safe in the 'safe' property
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/orizens/backbone.safe/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
